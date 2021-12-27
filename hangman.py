@@ -1,7 +1,21 @@
 import json
 import random
+import turtle
 
-""" Function Enter a Letter """
+### Setup Turtle ###
+t = turtle.Turtle(visible=False)
+t.speed(50)
+t.pensize(5)
+t.penup()
+
+### Start Writing Turtle ###
+w = turtle.Turtle(visible=False)
+align = "left"
+font=("Arial", 36, "bold")
+w.penup()
+w.goto(-300,-300)
+
+### Function Enter a Letter ###
 from pip._vendor.distlib.compat import raw_input
 def enter_letter(used):
     while True:
@@ -17,7 +31,19 @@ def enter_letter(used):
         else:
             return guess
 
-""" Build Board """
+### Build First Part of Hangman Stand ###
+def buildFirstStand():
+    t.penup()
+    t.goto(300,-200)
+    t.pendown()
+    t.goto(400,-200)
+    t.penup()
+    t.goto(350,-200)
+    t.pendown()
+    t.goto(350,350)
+    t.penup()
+
+### Build Board ###
 def build_board(correctletters, secretWord):
     used_letters()
     blanks = '_' * len(secretWord)
@@ -47,16 +73,16 @@ def playAgain(question):
         return playAgain(paQuestion)
     
 
-""" Load list of words """
+### Load list of words ###
 with open('words.json') as f:
     words = json.load(f)
     
-""" Randomly select word from list """
+### Randomly select word from list ###
 word = random.choice(words).lower()
-""" Create list from word """
+### Create list from word ###
 wordlist = list(word)
 
-""" Setup Game """
+### Setup Game ###
 paQuestion = 'Do you want to play again?'
 usedLetters = []
 numguesses = 6
@@ -69,7 +95,7 @@ while True:
     usedLetters.append(letterguess)
     if letterguess in wordlist :
         correctletters.append(letterguess)
-        """ Check for Win """
+        ### Check for Win ###
         foundAllLetters = True
         for i in range(len(wordlist)):
             if wordlist[i] not in correctletters:
@@ -84,7 +110,7 @@ while True:
             print("You have run out of guesses. The word was " + word + ".")
             gameIsDone = True
 
-    """ End Game """
+    ### End Game ###
     if gameIsDone:
         if playAgain(paQuestion):
             usedLetters = []
