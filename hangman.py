@@ -55,6 +55,7 @@ def setupGame():
     used_Letters = []
     numguesses = 8
     correctletters = []
+
     t.clear()
     t.reset()
     t.hideturtle()
@@ -75,6 +76,10 @@ def setupGame():
 
     ### Create list from word ###
     wordlist = list(word)
+
+    ### Check for apostrophe ###
+    if "'" in wordlist:
+        correctletters.append("'")
 
     return
 
@@ -176,7 +181,7 @@ def buildWord(correctletters, secretWord):
     for i in range(len(secretWord)):
         if secretWord[i] in correctletters:
             blanks = blanks[:i] + secretWord[i] + blanks[i+1:]
-    
+
     for letter in blanks:
         writeWord += letter + " "
 
