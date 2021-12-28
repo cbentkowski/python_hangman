@@ -208,10 +208,13 @@ def usedLetters():
 
 def playAgain(question):
     reply = str(raw_input(question+' (y/n): ').lower().strip())
-    if reply[0] == 'y':
-        return True
-    elif reply[0] == 'n':
-        return False
+    if reply != '':
+        if reply[0] == 'y':
+            return True
+        elif reply[0] == 'n':
+            return False
+        else:
+            return playAgain(paQuestion)
     else:
         return playAgain(paQuestion)
 
