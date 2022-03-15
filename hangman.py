@@ -3,14 +3,13 @@ import random
 import turtle
 from pathlib import Path
 
+### Find Path of Hangman ###
 source_path = Path(__file__).resolve()
 source_dir = source_path.parent
 
-### Load list of words ###
-with open(str(source_dir) + '/words.json') as f:
-    words = json.load(f)
-
 ### Global Variables ###
+wordsPath = str(source_dir) + "/words/"
+jsonWords = ""
 word = ""
 wordlist = []
 paQuestion = 'Do you want to play again?'
@@ -40,6 +39,27 @@ ul.hideturtle()
 ulfont=("Arial", 24, "bold")
 ul.penup()
 ul.goto(-375,300)
+
+### Function Get List of Words ###
+def getWordList(listFileName):
+    global words
+    with open(wordsPath + listFileName) as f:
+        words = json.load(f)
+
+### Function Choose Word List ###
+def chooseWordList():
+    global jsonWords
+    print("Type a number to choose a word list:")
+    print("1. Kindergarten Sight Words")
+    print("2. 3rd Grade Words")
+    menuChoice = input()
+    match menuChoice:
+        case "1":
+            return "k-sight-words.json"
+        case "2":
+            return "3rd-grade.json"
+        case _:
+            getWordList(chooseWordList())
 
 ### Function Setup Game ###
 def setupGame():
@@ -246,6 +266,7 @@ def buildHangman(numguesses):
             return
     
 ### Setup Game ###
+getWordList(chooseWordList())
 setupGame()
 
 while True:
